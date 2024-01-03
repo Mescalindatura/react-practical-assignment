@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useAppDispatch} from "../app/hooks";
-import {logInAction} from "../features/PostsSlicer";
+import {logInAction} from "../features/UserSlicer";
 
 const Auth = () => {
     const [userName, setName] = useState("");

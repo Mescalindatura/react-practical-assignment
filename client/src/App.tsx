@@ -12,7 +12,7 @@ function App() {
     }).catch((e) => console.error('API CONNECTION FAILED, PLEASE CHECK SERVER APP AND TRY AGAIN'))
   }, []);
 
-    const isLogIn = useAppSelector(state=>state.slicer.isLoggedIn);
+    const isLogIn = useAppSelector(state=>state.users.isLoggedIn);
 
     return (
         <div className="App">

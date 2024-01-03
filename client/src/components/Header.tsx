@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import {useAppDispatch, useAppSelector} from "../app/hooks";
-import {logOutAction} from "../features/PostsSlicer";
+import {logOutAction} from "../features/UserSlicer";
 
 const Header = () => {
-    const username = useAppSelector(state=>state.slicer.userName);
+    const username = useAppSelector(state=>state.users.userName);
     const dispatcher = useAppDispatch();
     const [keyword, setKeyword] = useState("");
 

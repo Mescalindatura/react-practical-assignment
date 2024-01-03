@@ -1,5 +1,5 @@
 
-interface Post {
+interface IPost {
     id: number
     title: string
     username: string
@@ -10,7 +10,7 @@ interface Post {
     comments: []
 }
 
-interface Comment {
+interface IComment {
     id: number
     postId: number
     text: string

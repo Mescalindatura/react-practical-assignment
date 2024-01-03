@@ -4,7 +4,7 @@ import Header from "./Header";
 import Posts from "./Posts";
 
 const Main = () => {
-    const username = useAppSelector(state=>state.slicer.userName);
+    const username = useAppSelector(state=>state.users.userName);
     const dispatcher = useAppDispatch();
     return (
         <div>
