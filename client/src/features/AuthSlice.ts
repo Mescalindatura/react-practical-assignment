@@ -5,7 +5,7 @@ const initialState = {
     isLoggedIn: false,
     userName: ""
 };
-const userSlicer = createSlice({
+const authSlice = createSlice({
     name: 'users',
     initialState,
     reducers: {
@@ -19,5 +19,5 @@ const userSlicer = createSlice({
         },
     }
 });
-export const {logInAction, logOutAction} = userSlicer.actions;
-export default userSlicer;
+export const {logInAction, logOutAction} = authSlice.actions;
+export default authSlice.reducer;

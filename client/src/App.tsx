@@ -1,8 +1,8 @@
 import "./App.css"
 import {useEffect} from "react";
 import {useAppSelector} from "./app/hooks";
-import Main from "./components/Main";
 import Auth from "./components/Auth";
+import Page from "./components/Page";
 
 function App() {
   useEffect(() => {
@@ -16,7 +16,7 @@ function App() {
 
     return (
         <div className="App">
-            {isLogIn?<Main/>:<Auth/>}
+            {isLogIn?<Page/>:<Auth/>}
         </div>
     );
 }

@@ -28,3 +28,20 @@
     margin-right: 0;
   }
 }
+
+
+.like-link {
+  margin-right: 5px
+
+}
+.dislike-link {
+  margin-left: 5px
+
+}
+.edit-butt {
+  margin-right: 5px;
+}
+
+.delete-butt {
+  margin-left: 5px;
+}

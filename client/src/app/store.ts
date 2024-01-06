@@ -1,13 +1,17 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit"
-import postsSlicer from "../features/PostsSlicer";
-import userSlicer from "../features/UserSlicer";
-import uiSlicer from "../features/UiSlicer";
+import uiSlice from "../features/UiSlice";
+import modalSlice from "../features/ModalSlice";
+import postsSlice from "../features/PageSlice";
+import authSlice from "../features/AuthSlice";
+
+
 
 export const store = configureStore({
   reducer: {
-    users: userSlicer.reducer,
-    posts: postsSlicer.reducer,
-    ui: uiSlicer.reducer
+    users: authSlice,
+    posts: postsSlice,
+    ui: uiSlice,
+    modal: modalSlice,
   },
 })
 

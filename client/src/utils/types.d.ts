@@ -1,4 +1,11 @@
 
+interface IState {
+    username: string
+    posts: IPost[],
+    currentPage?: number,
+    totalPages?: number
+}
+
 interface IPost {
     id: number
     title: string
@@ -7,7 +14,7 @@ interface IPost {
     dislikes: string[]
     imageSrc?: string
     date: number
-    comments: []
+    comments: IComment[]
 }
 
 interface IComment {
@@ -18,4 +25,11 @@ interface IComment {
     likes: string[]
     dislikes: string[]
     date: number
+}
+
+interface IReactions {
+    likes: string[]
+    dislikes: string[]
+    postid: number
+    commentid?: number
 }
