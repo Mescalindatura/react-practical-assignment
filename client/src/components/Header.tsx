@@ -11,7 +11,7 @@ const Header = () => {
     return (
         <div>
             <div><input type="text" className={"search"} onChange={(e) => setKeyword(e.target.value)}/>
-                <button className="search" onClick={dispatcher(getPostsByKeyword(keyword))}>Search</button>
+                <button className="search" onClick={()=>dispatcher(getPostsByKeyword(keyword))}>Search</button>
             </div>
             <div className="username">{username}</div>
             <button className="logout" onClick={()=>dispatcher(logOutAction())}>Log Out</button>

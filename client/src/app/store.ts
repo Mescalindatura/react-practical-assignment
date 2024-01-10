@@ -1,8 +1,8 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit"
-import uiSlice from "../features/UiSlice";
 import modalSlice from "../features/ModalSlice";
 import postsSlice from "../features/PageSlice";
 import authSlice from "../features/AuthSlice";
+import pageSlice from "../features/PageSlice";
 
 
 
@@ -10,8 +10,8 @@ export const store = configureStore({
   reducer: {
     users: authSlice,
     posts: postsSlice,
-    ui: uiSlice,
     modal: modalSlice,
+    page: pageSlice
   },
 })
 

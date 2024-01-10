@@ -1,7 +1,7 @@
 import React from 'react';
 import {useAppSelector} from "../app/hooks";
 
-const AddEditPost = () => {
+const AddEditModal = () => {
     const isOpen = useAppSelector(state=>state.modal.isOpen)
     return (
         <div>
@@ -10,4 +10,4 @@ const AddEditPost = () => {
     );
 };
 
-export default AddEditPost;
+export default AddEditModal;

@@ -14,6 +14,7 @@ const Paginator = () => {
     }
 
     let items = [];
+    // @ts-ignore
     for (let number = 1; number <= total; number++) {
         items.push(
             <Pagination.Item

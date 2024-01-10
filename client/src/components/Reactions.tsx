@@ -4,8 +4,8 @@ import {
     faCircleDown,
     faCircleUp,
 } from "@fortawesome/free-solid-svg-icons";
-import {putPostRatingAction} from "../features/UiSlice";
 import {useAppDispatch, useAppSelector} from "../app/hooks";
+import {updatePostRating} from "../features/ApiActions";
 
 const Reactions: React.FC<IReactions> = ({likes, dislikes, postid, commentid}) => {
     const username = useAppSelector(state => state.users.userName);
@@ -18,8 +18,8 @@ const Reactions: React.FC<IReactions> = ({likes, dislikes, postid, commentid}) =
 
     function handleLike() {
         setLiked(prevLiked => {
-            const likesTemp = likes;
-            const dislikesTemp = dislikes;
+            let likesTemp = [...likes];
+            let dislikesTemp = [...dislikes];
 
             if (prevLiked) {
                 const indexToRemove = likesTemp.indexOf(username);
@@ -37,7 +37,7 @@ const Reactions: React.FC<IReactions> = ({likes, dislikes, postid, commentid}) =
                 likesTemp.push(username);
             }
             if (!commentid) {
-                dispatcher(putPostRatingAction({postid: postid, likes: likesTemp, dislikes: dislikesTemp}));
+                dispatcher(updatePostRating(likesTemp, dislikesTemp, postid));
             }
             return !prevLiked;
         });
@@ -45,8 +45,8 @@ const Reactions: React.FC<IReactions> = ({likes, dislikes, postid, commentid}) =
 
     function handleDislike() {
         setDisliked(prev => {
-            const dislikesTemp = dislikes;
-            const likesTemp = likes;
+            let likesTemp = [...likes];
+            let dislikesTemp = [...dislikes];
 
             if (prev) {
                 const indexToRemove = dislikesTemp.indexOf(username);
@@ -64,7 +64,7 @@ const Reactions: React.FC<IReactions> = ({likes, dislikes, postid, commentid}) =
                 dislikesTemp.push(username);
             }
             if (!commentid) {
-                dispatcher(putPostRatingAction({postid: postid, likes: likesTemp, dislikes: dislikesTemp}));
+                dispatcher(updatePostRating(likesTemp, dislikesTemp, postid));
             }
             return !prev;
         });

@@ -33,3 +33,21 @@ interface IReactions {
     postid: number
     commentid?: number
 }
+
+interface IItem {
+    id: number
+    postId?: number
+    title?: string
+    text?: string
+    username: string
+    likes: string[]
+    dislikes: string[]
+    imageSrc?: string
+    date: number
+}
+
+// interface IPostProps {
+//     post: IPost
+//     edit: (post:IPost)=>void
+//     delete: (id:number) =>void
+// }
