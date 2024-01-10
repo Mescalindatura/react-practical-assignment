@@ -14,7 +14,7 @@ const Reactions: React.FC<IReactions> = ({likes, dislikes, postid, commentid}) =
     const [liked, setLiked] = useState(false);
     const [disliked, setDisliked] = useState(false);
 
-    let reactions = likes.length - dislikes.length;
+    const reactions = likes.length - dislikes.length;
 
     function handleLike() {
         setLiked(prevLiked => {

@@ -5,7 +5,8 @@ const initialState: IState = {
     username: "",
     posts: [],
     currentPage: 1,
-    totalPages: 1
+    totalPages: 1,
+    isError: false
 };
 
 const pageSlice = createSlice({
@@ -15,14 +16,15 @@ const pageSlice = createSlice({
         putPostsAction(state, action) {
             state.posts = action.payload;
         },
+        errorPageAction(){
+
+        },
         updatePagesAction(state, action){
             state.currentPage = action.payload.current;
             state.totalPages = action.payload.total;
         },
         updatePostAction(state, action){
-            console.log("slicer is here")
             const updatedPost: IPost = action.payload;
-            console.log("post updating started")
             if (updatedPost) {
                 const index = state.posts.findIndex((p: IPost) => p.id === updatedPost.id);
                 const tempPosts = [...state.posts];
@@ -67,6 +69,19 @@ const pageSlice = createSlice({
             else {
                 console.log("comment creation returned null");
             }
+        },
+        deleteCommentAction(state, action) {
+            const comment = action.payload;
+            if(comment) {
+                const index = state.posts.findIndex((p: IPost) => p.id === comment.postId);
+                const i = state.posts[index].comments.findIndex((c: IComment) => c.id === comment.id);
+                const tempPosts = state.posts;
+                tempPosts[index].comments.splice(i, 1);
+                state.posts = tempPosts;
+            }
+            else {
+                console.log("comment removement returned null");
+            }
         }
 
     }
@@ -78,5 +93,7 @@ export const {
     putPostsAction,
     updatePagesAction,
     putCommentAction,
-    updateCommentAction} = pageSlice.actions;
+    updateCommentAction,
+    errorPageAction,
+    deleteCommentAction} = pageSlice.actions;
 export default pageSlice.reducer;

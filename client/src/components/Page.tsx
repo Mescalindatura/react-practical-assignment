@@ -1,43 +1,44 @@
-import React, {useEffect, useState} from 'react';
-import {useAppDispatch, useAppSelector} from "../app/hooks";
-import Post from "./Post";
+import React, { useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { createPost, getPostsByPage } from "../features/ApiActions";
+import { Container, Row, Col } from "react-bootstrap";
 import Header from "./Header";
-import {createPost, deletePost, getPostsByPage, updatePost} from "../features/ApiActions";
 import Paginator from "./Paginator";
+import Post from "./Post";
 
 const Page = () => {
     const dispatcher = useAppDispatch();
-    const posts = useAppSelector(state => state.posts.posts);
-    const modalIsOpen = useAppSelector(state => state.modal.isOpen);
+    const posts = useAppSelector(state => state.page.posts);
+    const username = useAppSelector(state => state.users.userName);
+    const [newTitle, setTitle] = useState("");
 
     useEffect(() => {
         dispatcher(getPostsByPage(1));
-
     }, [dispatcher]);
 
-    const handleModal = () => {
-
-    }
-
-    const postEdit = (post: IPost) => {
-        dispatcher(updatePost(post))
-    }
-
-    const postDelete = (id: number) => {
-        dispatcher(deletePost(id))
+    const handleAdding = () => {
+        dispatcher(createPost(newTitle, username));
     }
 
     return (
         <div>
-            <Header/>
-            <button className={"add-post"} onClick={handleModal}>Add new post</button>
-            <div className={"post-container"}>
-                {posts.map((post) => (
-                    <div className={"post"} key={post.id}>
-                        <Post {...post} />
-                    </div>
-                ))}
-                <Paginator/>
+            <Header />
+            <Container className="my-3 d-flex justify-content-center">
+                    <textarea className="newPostInput" onChange={(e) => setTitle(e.target.value)}></textarea>
+                    <button className={"add-post-btn"} onClick={handleAdding}>Add new post</button>
+            </Container>
+
+            <Container>
+                <Row xs={1} md={3} className="g-4">
+                    {posts.map((post) => (
+                        <Col key={post.id}>
+                            <Post {...post} />
+                        </Col>
+                    ))}
+                </Row>
+            </Container>
+            <div className="my-3 d-flex justify-content-center">
+                <Paginator />
             </div>
         </div>
     );

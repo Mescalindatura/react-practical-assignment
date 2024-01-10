@@ -1,8 +1,11 @@
 import "./App.css"
-import {useEffect} from "react";
+import React, {useEffect} from "react";
 import {useAppSelector} from "./app/hooks";
 import Auth from "./components/Auth";
 import Page from "./components/Page";
+import ErrorPage from "./components/ErrorPage";
+import AddEditModal from "./components/AddEditModal";
+
 
 function App() {
   useEffect(() => {
@@ -13,10 +16,17 @@ function App() {
   }, []);
 
     const isLogIn = useAppSelector(state=>state.users.isLoggedIn);
-
+const isError = useAppSelector(state=>state.page.isError);
+const modalIsOpen = useAppSelector(state=>state.modal.isOpen);
     return (
         <div className="App">
             {isLogIn?<Page/>:<Auth/>}
+          {isError&&<ErrorPage/>}
+            {modalIsOpen && (
+                <div className="modal-overlay">
+                    <AddEditModal />
+                </div>
+            )}
         </div>
     );
 }

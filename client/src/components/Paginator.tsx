@@ -5,8 +5,8 @@ import {getPostsByPage} from "../features/ApiActions";
 
 const Paginator = () => {
 
-    const active = useAppSelector(state=>state.posts.currentPage);
-    const total = useAppSelector(state=>state.posts.totalPages);
+    const active = useAppSelector(state=>state.page.currentPage);
+    const total = useAppSelector(state=>state.page.totalPages);
     const dispatcher = useAppDispatch();
 
     const handlePageSelection = (page:number)=>{

@@ -1,6 +1,14 @@
 import {base_url} from "../utils/constants";
 import {AppDispatch} from "../app/store";
-import {putCommentAction, putPostsAction, updateCommentAction, updatePagesAction, updatePostAction} from "./PageSlice";
+import {
+    deleteCommentAction,
+    errorPageAction,
+    putCommentAction,
+    putPostsAction,
+    updateCommentAction,
+    updatePagesAction,
+    updatePostAction
+} from "./PageSlice";
 
 export const getPostsByPage = (page: number) => {
     return (dispatch: AppDispatch) => {
@@ -14,7 +22,10 @@ export const getPostsByPage = (page: number) => {
             dispatch(putPostsAction(data.result))
             dispatch(updatePagesAction({current: data.page, total: data.totalPages}))
         })
-            .catch(error => console.log(error.message));
+            .catch(error => {
+                console.log(error.message);
+                dispatch(errorPageAction());
+            });
     }
 }
 
@@ -30,7 +41,10 @@ export const getPostsByKeyword = (keyword: string) => {
             dispatch(putPostsAction(data.result));
             dispatch(updatePagesAction({current: 1, total: 1}));
         })
-            .catch(error => console.log(error.message));
+            .catch(error => {
+                console.log(error.message);
+                dispatch(errorPageAction());
+            });
     }
 }
 export const createPost = (title: string, username: string) => {
@@ -52,7 +66,10 @@ export const createPost = (title: string, username: string) => {
             }).then(data => {
             dispatch(getPostsByPage(1))
         })
-            .catch(error => console.log(error.message));
+            .catch(error => {
+                console.log(error.message);
+                dispatch(errorPageAction());
+            });
     }
 }
 
@@ -72,12 +89,18 @@ export const uploadPicture = (id: number, file: File) => {
                     throw new Error(response.statusText)
             }).then(data => {
             dispatch(updatePostAction(data.result))
-        }).catch(error => console.log(error.message))
+        }).catch(error => {
+            console.log(error.message);
+            dispatch(errorPageAction());
+        })
     }
 }
-export const updatePost = (post: IPost) => {
+export const updatePost = (postId: number, title: string) => {
     return (dispatch: AppDispatch) => {
-        fetch(`${base_url}/post/${post.id}`, {
+        const post = {
+            "title": title
+        }
+        fetch(`${base_url}/post/${postId}`, {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(post)
@@ -89,7 +112,10 @@ export const updatePost = (post: IPost) => {
                     throw new Error(response.statusText)
             }).then(data => {
             dispatch(updatePostAction(data.result))
-        }).catch(error => console.log(error.message))
+        }).catch(error => {
+            console.log(error.message);
+            dispatch(errorPageAction());
+        })
     }
 }
 
@@ -114,7 +140,10 @@ export const updatePostRating = (likes: string[], dislikes: string[], postId: nu
                 console.log(data.result.id);
                 dispatch(updatePostAction(data.result));
             })
-            .catch(error => console.log(error.message));
+            .catch(error => {
+                console.log(error.message);
+                dispatch(errorPageAction());
+            });
     }
 }
 
@@ -132,7 +161,10 @@ export const deletePost = (id: number) => {
             })
             .then(data => {
                 dispatch(getPostsByPage(1))
-            }).catch(error => console.log(error.message))
+            }).catch(error => {
+            console.log(error.message);
+            dispatch(errorPageAction());
+        })
     }
 }
 export const createComment = (postId: number, text: string, username: string) => {
@@ -154,8 +186,12 @@ export const createComment = (postId: number, text: string, username: string) =>
                     throw new Error(response.statusText)
             })
             .then(data => {
-                dispatch(putCommentAction(data.result))
-            }).catch(error => console.log(error.message))
+                console.log(data.result.text);
+                dispatch(putCommentAction(data.result));
+            }).catch(error => {
+            console.log(error.message);
+            dispatch(errorPageAction());
+        })
     }
 }
 
@@ -179,10 +215,12 @@ export const updateComment = (id: number, text: string, likes: [string], dislike
             })
             .then(data => {
                 dispatch(updateCommentAction(data.result))
-            }).catch(error => console.log(error.message))
+            }).catch(error => {
+            console.log(error.message);
+            dispatch(errorPageAction());
+        })
     }
 }
-
 
 export const deleteComment = (id: number) => {
     return (dispatch: AppDispatch) => {
@@ -197,8 +235,11 @@ export const deleteComment = (id: number) => {
                     throw new Error(response.statusText)
             })
             .then(data => {
-              //  dispatch(deleteCommentAction(data.result))
-            }).catch(error => console.log(error.message))
+                dispatch(deleteCommentAction(data.result))
+            }).catch(error => {
+            console.log(error.message);
+            dispatch(errorPageAction());
+        })
     }
 }
 //todo: think about what to perform after deleting comment
