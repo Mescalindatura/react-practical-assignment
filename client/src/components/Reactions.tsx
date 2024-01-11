@@ -1,18 +1,18 @@
 import React, {useState} from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
-    faCircleDown,
-    faCircleUp,
+faArrowDownLong,
+faArrowUpLong,faDownLong, faUpLong,
 } from "@fortawesome/free-solid-svg-icons";
 import {useAppDispatch, useAppSelector} from "../app/hooks";
-import {updatePostRating} from "../features/ApiActions";
+import {updateComment, updatePostRating} from "../features/ApiActions";
 
-const Reactions: React.FC<IReactions> = ({likes, dislikes, postid, commentid}) => {
+const Reactions: React.FC<IReactions> = ({likes, dislikes, postid, commentid, text}) => {
     const username = useAppSelector(state => state.users.userName);
     const dispatcher = useAppDispatch();
 
-    const [liked, setLiked] = useState(false);
-    const [disliked, setDisliked] = useState(false);
+    const [liked, setLiked] = useState(likes.includes(username));
+    const [disliked, setDisliked] = useState(dislikes.includes(username));
 
     const reactions = likes.length - dislikes.length;
 
@@ -38,6 +38,11 @@ const Reactions: React.FC<IReactions> = ({likes, dislikes, postid, commentid}) =
             }
             if (!commentid) {
                 dispatcher(updatePostRating(likesTemp, dislikesTemp, postid));
+            }
+            else {
+                // @ts-ignore
+                dispatcher(updateComment(commentid,text as string, likesTemp, dislikesTemp));
+                console.log("like comment dispatched")
             }
             return !prevLiked;
         });
@@ -66,6 +71,11 @@ const Reactions: React.FC<IReactions> = ({likes, dislikes, postid, commentid}) =
             if (!commentid) {
                 dispatcher(updatePostRating(likesTemp, dislikesTemp, postid));
             }
+            else {
+                // @ts-ignore
+                dispatcher(updateComment(commentid,text as string, likesTemp, dislikesTemp));
+                console.log("dislike comment dispatched")
+            }
             return !prev;
         });
     }
@@ -73,11 +83,11 @@ const Reactions: React.FC<IReactions> = ({likes, dislikes, postid, commentid}) =
     return (
         <div>
             <a onClick={handleLike} className={"like-link"}>
-                <FontAwesomeIcon icon={faCircleUp}/>
+                {liked?<FontAwesomeIcon icon={faUpLong} />: <FontAwesomeIcon icon={faArrowUpLong} /> }
             </a>
             <span className={"reactions-count"}>{reactions}</span>
             <a onClick={handleDislike} className={"dislike-link"}>
-                <FontAwesomeIcon icon={faCircleDown}/>
+                {disliked?<FontAwesomeIcon icon={faDownLong} /> :<FontAwesomeIcon icon={faArrowDownLong} />}
             </a>
         </div>
     );

@@ -33,6 +33,7 @@ interface IReactions {
     dislikes: string[]
     postid: number
     commentid?: number
+    text?:string
 }
 
 

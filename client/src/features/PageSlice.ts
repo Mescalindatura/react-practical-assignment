@@ -1,5 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {base_url} from "../utils/constants";
+import {updateImgSrc} from "./ModalSlice";
 
 const initialState: IState = {
     username: "",
@@ -29,8 +30,10 @@ const pageSlice = createSlice({
                 const index = state.posts.findIndex((p: IPost) => p.id === updatedPost.id);
                 const tempPosts = [...state.posts];
                 tempPosts.splice(index, 1, updatedPost);
+                updateImgSrc(updatedPost.imageSrc);
                 state.posts = tempPosts;
-            } else {
+            } else {            console.log("post uodating started")
+
                 console.log("post updating returned null or so")
             }
         },

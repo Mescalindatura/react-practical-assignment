@@ -9,6 +9,7 @@ import {
     updatePagesAction,
     updatePostAction
 } from "./PageSlice";
+import {updateImgSrc} from "./ModalSlice";
 
 export const getPostsByPage = (page: number) => {
     return (dispatch: AppDispatch) => {
@@ -75,20 +76,26 @@ export const createPost = (title: string, username: string) => {
 
 export const uploadPicture = (id: number, file: File) => {
     return (dispatch: AppDispatch) => {
+        console.log("upload started")
         const formData = new FormData();
         formData.append('picture', file);
+        console.log("data appended")
         fetch(`${base_url}/post/${id}/picture`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: formData
+            body: formData,
+            mode: 'no-cors'
         })
             .then(response => {
-                if (response.status === 200)
+                if (response.status === 200) {
+                    console.log(response.statusText)
                     return response.json()
-                else
+                } else {
+                    console.log(response.statusText)
                     throw new Error(response.statusText)
+                }
             }).then(data => {
-            dispatch(updatePostAction(data.result))
+            dispatch(updatePostAction(data.result));
         }).catch(error => {
             console.log(error.message);
             dispatch(errorPageAction());
@@ -174,6 +181,7 @@ export const createComment = (postId: number, text: string, username: string) =>
             "postId": postId,
             "username": username
         }
+        console.log("post id transfered to api: " + comment.postId);
         fetch(`${base_url}/comment/`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -214,7 +222,7 @@ export const updateComment = (id: number, text: string, likes: [string], dislike
                     throw new Error(response.statusText)
             })
             .then(data => {
-                dispatch(updateCommentAction(data.result))
+                dispatch(updateCommentAction(data.result));
             }).catch(error => {
             console.log(error.message);
             dispatch(errorPageAction());
