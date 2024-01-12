@@ -118,7 +118,8 @@ export const updatePost = (postId: number, title: string) => {
                 else
                     throw new Error(response.statusText)
             }).then(data => {
-            dispatch(updatePostAction(data.result))
+            console.log("this is updated post: " + data.result.id);
+            dispatch(updatePostAction(data.result));
         }).catch(error => {
             console.log(error.message);
             dispatch(errorPageAction());

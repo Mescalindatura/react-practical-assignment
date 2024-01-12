@@ -12,6 +12,7 @@ const AddEditModal = () => {
     const modalIsOpen = useAppSelector(state => state.modal.isOpen);
     const dispatcher = useAppDispatch();
     const [updatedText, setText] = useState(props.text);
+    const [imgSrc, setImgSrc] = useState(props.imgSrc);
 
     function handleSave() {
         if (props.isPost && props.text) {
@@ -39,10 +40,11 @@ const AddEditModal = () => {
                         controlId="exampleForm.ControlTextarea1">
                         <Form.Control as="textarea" rows={3} value={updatedText}
                                       onChange={(e) => setText(e.target.value)}/>
-                        {props.text && <>{props.imgSrc &&
-                            <img src={props.imgSrc} alt="picture attached" className="post-pic"
+                        {props.text && <>{imgSrc &&
+                            <img src={imgSrc} alt="picture attached" className="post-pic"
                                  style={{width: '100%'}}/>}
-                            {props.isPost && <ImageUploader postId={props.postId}/>}</>}
+                            {props.isPost && <ImageUploader postId={props.postId}
+                            />}</>}
                     </Form.Group>
                 </Form>
             </Modal.Body>

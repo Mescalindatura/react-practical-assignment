@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {useAppDispatch, useAppSelector} from "../app/hooks";
 import {logOutAction} from "../features/AuthSlice";
-import {getPostsByKeyword} from "../features/ApiActions";
+import {getPostsByKeyword, getPostsByPage} from "../features/ApiActions";
 import {Button, Container, Form, InputGroup, Navbar} from "react-bootstrap";
 
 const Header = () => {
@@ -32,23 +32,23 @@ const Header = () => {
 
         <Navbar bg="primary" data-bs-theme="light">
             <Container>
-                <Navbar.Brand href="#home">Olim Tech forum</Navbar.Brand>
-                <Form className="search-container">
-                    <InputGroup>
-                        <Form.Control
-                            type="text"
-                            className=" mr-sm-2"
-                            onChange={(e) => handleInputChange(e.target.value)}
-                            placeholder="Search..."
-                        />
-                    </InputGroup>
-                </Form>
+                <Navbar.Brand className={"justify-content-start"}>Olim Tech forum</Navbar.Brand>
+                    <Form className="search-container">
+                        <InputGroup>
+                            <Form.Control
+                                type="text"
+                                className=" mr-sm-2"
+                                onChange={(e) => handleInputChange(e.target.value)}
+                                placeholder="Search..."
+                            />
+                        </InputGroup>
+                    </Form>
                 <Navbar.Toggle/>
                 <Navbar.Collapse className="justify-content-end">
                     <Navbar.Text className="mr-5">
                         Hello, {username}!
                     </Navbar.Text>
-                    <Button className="ml-5" variant="outline-light" onClick={() => dispatcher(logOutAction())}>
+                    <Button className="justify-content-end" variant="outline-light" onClick={() => dispatcher(logOutAction())}>
                         Log Out
                     </Button>
                 </Navbar.Collapse>
